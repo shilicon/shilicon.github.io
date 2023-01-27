@@ -86,6 +86,13 @@ header .container {
   font-size:20px;
 }
 
+#news {
+  background: #265FA3;
+/*  background: #18BC9C; The old green-ish color*/
+  padding-bottom: 10px;
+  font-size:17px;
+}
+
 #portfolio {
   background: #FFFFFF;
   padding-bottom: 5px;
@@ -98,7 +105,7 @@ header .container {
   background: #265FA3;
 /*  background: #18BC9C; The old green-ish color*/
   padding-bottom: 5px;
-  font-size:20px;
+  font-size:17px;
 
 
 }
