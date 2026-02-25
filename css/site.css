@@ -8,6 +8,9 @@
   --text-muted: #b3beca;
   --accent: #65d6a6;
   --accent-2: #7aa7ff;
+  --button-bg-start: #65d6a6;
+  --button-bg-end: #7aa7ff;
+  --button-text: #0b1014;
   --border: #22303c;
   --shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
   --max-width: 1120px;
@@ -26,6 +29,9 @@
   --text-muted: #4b5a68;
   --accent: #1f8f6b;
   --accent-2: #3359c4;
+  --button-bg-start: #1f8f6b;
+  --button-bg-end: #3359c4;
+  --button-text: #f6f5f2;
   --border: #d6d2ca;
   --shadow: 0 18px 36px rgba(15, 23, 32, 0.12);
 }
@@ -319,8 +325,8 @@ main {
 }
 
 .button {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #0b1014;
+  background: linear-gradient(135deg, var(--button-bg-start), var(--button-bg-end));
+  color: var(--button-text);
   padding: 10px 18px;
   border-radius: 999px;
   font-weight: 600;
