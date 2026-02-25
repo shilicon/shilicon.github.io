@@ -192,6 +192,22 @@ main {
   padding: 40px 0;
 }
 
+.section-tight-top {
+  padding-top: 0;
+}
+
+.section-tight-bottom {
+  padding-bottom: 0;
+}
+
+.publication-intro {
+  margin-bottom: 0;
+}
+
+.publication-list {
+  margin-top: 0;
+}
+
 .section-title {
   font-family: var(--font-display);
   font-size: 1.8rem;
