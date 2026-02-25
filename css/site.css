@@ -385,6 +385,11 @@ main {
 }
 
 @media (max-width: 720px) {
+  .site-header .container {
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+  }
+
   .header-inner {
     align-items: flex-start;
     flex-direction: column;
