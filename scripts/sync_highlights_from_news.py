@@ -7,6 +7,7 @@ ROOT = Path("/Users/skmacair/work/shilicon.github.io")
 NEWS_PATH = ROOT / "news/index.html"
 HOME_PATH = ROOT / "index.html"
 LIMIT = 3
+ABBREVIATIONS = {"mr.", "mrs.", "ms.", "dr.", "prof.", "sr.", "jr.", "e.g.", "i.e."}
 
 
 def extract_news_items(news_html: str) -> list[str]:
@@ -21,10 +22,36 @@ def extract_news_items(news_html: str) -> list[str]:
     return items[:LIMIT]
 
 
+def first_sentence(text: str) -> str:
+    clean = re.sub(r"\s+", " ", text).strip()
+    for punct in re.finditer(r"[.!?]", clean):
+        idx = punct.start()
+        candidate = clean[: idx + 1].strip()
+        last_word = candidate.split()[-1].lower() if candidate.split() else ""
+        if punct.group() == "." and last_word in ABBREVIATIONS:
+            continue
+        tail = clean[idx + 1 :]
+        if re.match(r"^\s+[A-Z\"']", tail) or not tail.strip():
+            return candidate
+    return clean
+
+
+def trim_item_to_first_sentence(item_html: str) -> str:
+    meta_match = re.search(
+        r"(<div class=\"meta\">)([\s\S]*?)(</div>)",
+        item_html,
+        flags=re.IGNORECASE,
+    )
+    if not meta_match:
+        return item_html
+    trimmed = first_sentence(meta_match.group(2))
+    return item_html[: meta_match.start(2)] + trimmed + item_html[meta_match.end(2) :]
+
+
 def format_home_list(items: list[str]) -> str:
     lines = ['          <ul class="list stagger" style="margin: 0;">']
     for item in items:
-        block = item.strip().splitlines()
+        block = trim_item_to_first_sentence(item).strip().splitlines()
         for line in block:
             lines.append(f"            {line.strip()}")
     lines.append("          </ul>")
