@@ -35,6 +35,8 @@ MONTH_MAP = {
     "december": 12,
 }
 
+MY_AUTHOR_ALIASES = {"kan shi", "shi kan"}
+
 
 def parse_month(raw: str) -> int | None:
     if not raw:
@@ -44,6 +46,28 @@ def parse_month(raw: str) -> int | None:
         month_num = int(val)
         return month_num if 1 <= month_num <= 12 else None
     return MONTH_MAP.get(val)
+
+
+def normalize_author_name(name: str) -> str:
+    clean = re.sub(r"[^\w\s,]", " ", name).lower()
+    clean = re.sub(r"\s+", " ", clean).strip()
+    if "," in clean:
+        parts = [p.strip() for p in clean.split(",", 1)]
+        if len(parts) == 2 and parts[0] and parts[1]:
+            clean = f"{parts[1]} {parts[0]}"
+    return clean.replace(",", "")
+
+
+def highlight_authors(authors_raw: str) -> str:
+    parts = [p.strip() for p in re.split(r"\s+and\s+", authors_raw) if p.strip()]
+    highlighted = []
+    for author in parts:
+        normalized = normalize_author_name(author)
+        if normalized in MY_AUTHOR_ALIASES:
+            highlighted.append(f"<span class=\"author-me\">{author}</span>")
+        else:
+            highlighted.append(author)
+    return " and ".join(highlighted)
 
 
 def parse_entries(bib_text: str):
@@ -73,7 +97,7 @@ def parse_entries(bib_text: str):
         entries.append(
             {
                 "title": title,
-                "authors": fields.get("author", "Unknown authors"),
+                "authors": highlight_authors(fields.get("author", "Unknown authors")),
                 "venue": fields.get("journal")
                 or fields.get("booktitle")
                 or fields.get("publisher")

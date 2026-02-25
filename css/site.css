@@ -268,6 +268,14 @@ main {
   color: var(--text-muted);
 }
 
+.author-me {
+  color: var(--accent) !important;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  border-radius: 6px;
+  padding: 0 4px;
+}
+
 .tag {
   display: inline-flex;
   align-items: center;
