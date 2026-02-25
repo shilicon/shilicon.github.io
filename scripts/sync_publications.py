@@ -114,7 +114,13 @@ def parse_entries(bib_text: str):
 
 def build_list_html(entries) -> str:
     items = []
+    previous_year = None
     for entry in entries:
+        if previous_year is not None and entry["year"] != previous_year:
+            items.append(
+                "          <li class=\"year-divider\" aria-hidden=\"true\">"
+                f"<span>{entry['year']}</span></li>"
+            )
         items.append(
             "          <li>\n"
             f"            <strong>{entry['title']}</strong>\n"
@@ -122,6 +128,7 @@ def build_list_html(entries) -> str:
             f"            <div class=\"meta\">{entry['venue']} · {entry['year']}</div>\n"
             "          </li>"
         )
+        previous_year = entry["year"]
     return "<ul class=\"list stagger publication-list\">\n" + "\n".join(items) + "\n        </ul>"
 
 

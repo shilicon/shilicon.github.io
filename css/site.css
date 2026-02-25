@@ -208,6 +208,31 @@ main {
   margin-top: 30px;
 }
 
+.publication-list .year-divider {
+  background: transparent;
+  border: 0;
+  padding: 6px 0 2px;
+  margin: 6px 0 2px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-muted);
+}
+
+.publication-list .year-divider::before,
+.publication-list .year-divider::after {
+  content: "";
+  height: 1px;
+  background: var(--border);
+  flex: 1;
+}
+
+.publication-list .year-divider span {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .section-title {
   font-family: var(--font-display);
   font-size: 1.8rem;
